@@ -25,40 +25,69 @@ def logout(request):
     auth.logout(request)
     return redirect('login')
 
-@anonymous_required
-def login(request):
-    
-    return render (request, 'user/login.html', {})
-    
     
 @anonymous_required
 def register(request):
     
+    if request.method == "POST":
+        email = request.POST['email'].replace(' ', '').lower()
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+        
+        if not pass1 == pass2:
+            messages.error(request, "passwords do not match" )
+            return redirect('register')
+        
+        newUser = User.objects.create(username=email, email=email, password=pass1)
+        newUser.save()
+        
+        auth.login(request, newUser)
+        return redirect('dashboard')
+      
     return render (request, 'user/register.html', {})
 
-# @login_required
 @anonymous_required
+def login(request):
+    
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        
+        theUser = auth.authenticate(username=email, password=password)
+        
+        if theUser is not None:
+            auth.login(request, theUser)
+            return redirect('dashboard')
+        else:
+            messages.error(request, "username and password didnt match")
+            return redirect ('register')
+   
+    return render (request, 'user/login.html', {})
+    
+
+@login_required
+# @anonymous_required
 def dashboard(request):
     
     return render (request, 'user/dash.html', {})
 
-# @login_required    
-@anonymous_required
+@login_required    
+# @anonymous_required
 def index(request):
     return render (request, 'user/index.html', {})
 
-# @login_required
-@anonymous_required
+@login_required
+# @anonymous_required
 def jewellery(request):
     return render (request, 'user/jewellery.html')
 
-# @login_required
-@anonymous_required
+@login_required
+# @anonymous_required
 def electronic(request):
     return render (request, 'user/electronic.html')
 
-# @login_required
-@anonymous_required
+@login_required
+# @anonymous_required
 def fashion(request):
     return render (request, 'user/fashion.html')
 

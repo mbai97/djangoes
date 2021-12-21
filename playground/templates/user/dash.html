@@ -52,9 +52,10 @@
                            <li><a href="#">Cookeries</a></li>
                            <li><a href="#">Laundries</a></li>
                            <li><a href="#">Toileries</a></li>
-                           <li><a href=" {% url 'login' %}">Logout</a> </li>
+                           <li> Welcome {{user.email}} </li>
                         </ul>
                      </div>
+                     
                   </div>
                </div>
             </div>
@@ -81,6 +82,7 @@
                      <a href="{% url 'fashion'%}">Fashion</a>
                      <a href="{% url 'electronic'%}">Electronic</a>
                      <a href="{% url 'jewellery'%}">Jewellery</a>
+                     <a href=" {% url 'login' %}">Logout</a> 
                   </div>
                   <span class="toggle_icon" onclick="openNav()"><img src="{% static 'dash/images/toggle-icon.png'%}"></span>
                   <div class="dropdown">

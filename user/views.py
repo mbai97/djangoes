@@ -36,11 +36,32 @@ def register(request):
     
     return render (request, 'user/register.html', {})
 
-@login_required
+# @login_required
+@anonymous_required
 def dashboard(request):
     
-    return render (request, 'user/dashboard.html', {})
-    
+    return render (request, 'user/dash.html', {})
+
+# @login_required    
+@anonymous_required
+def index(request):
+    return render (request, 'user/index.html', {})
+
+# @login_required
+@anonymous_required
+def jewellery(request):
+    return render (request, 'user/jewellery.html')
+
+# @login_required
+@anonymous_required
+def electronic(request):
+    return render (request, 'user/electronic.html')
+
+# @login_required
+@anonymous_required
+def fashion(request):
+    return render (request, 'user/fashion.html')
+
 
     
     
